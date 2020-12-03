@@ -18,10 +18,8 @@ from django.urls import path, include
 from drf_yasg2 import openapi
 from drf_yasg2.views import get_schema_view
 from rest_framework import permissions
-from drf_yasg2.generators import OpenAPISchemaGenerator
 
 from rookly.api.v1 import urls as rookly_api_v1_urls
-from rookly.api.v1.swagger import CustomOpenAPISchemaGenerator
 
 schema_view = get_schema_view(
     openapi.Info(

@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'drf_yasg2',
+    'rookly.authentication',
 ]
 
 MIDDLEWARE = [
@@ -82,6 +83,10 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
+# Auth
+
+AUTH_USER_MODEL = "authentication.User"
 
 
 # Password validation
