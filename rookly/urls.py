@@ -14,8 +14,30 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+from drf_yasg2 import openapi
+from drf_yasg2.views import get_schema_view
+from rest_framework import permissions
+from drf_yasg2.generators import OpenAPISchemaGenerator
+
+from rookly.api.v1 import urls as rookly_api_v1_urls
+from rookly.api.v1.swagger import CustomOpenAPISchemaGenerator
+
+schema_view = get_schema_view(
+    openapi.Info(
+        title="API Documentation",
+        default_version="v1.0.0",
+        description="Documentation",
+        terms_of_service="https://rookly.com.br/terms",
+        contact=openapi.Contact(email="contact@rookly.com.br"),
+        license=openapi.License(name="GPL-3.0 License"),
+    ),
+    public=False,
+    permission_classes=(permissions.AllowAny,),
+)
 
 urlpatterns = [
+    path("", schema_view.with_ui("redoc")),
     path('admin/', admin.site.urls),
+    path("v1/", include(rookly_api_v1_urls)),
 ]
