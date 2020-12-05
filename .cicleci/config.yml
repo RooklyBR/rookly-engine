@@ -1,0 +1,24 @@
+version: 2.1
+orbs:
+  python: circleci/python@1.0.0
+jobs:
+  build:
+    docker:
+      - image: cimg/python:3.6.10
+        environment:
+          DATABASE_URL: postgresql://root@localhost/rookly?sslmode=disable
+      - image: circleci/postgres:9.6.2
+        environment:
+          POSTGRES_USER: root
+          POSTGRES_DB: rookly
+    steps:
+      - checkout
+      - python/install-packages
+      - run:
+          name: Run django tests
+          command: |
+            pipenv run python manage.py test
+      - run:
+          name: check pep8
+          command: |
+            pipenv run flake8 rookly
