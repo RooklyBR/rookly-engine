@@ -1,7 +1,6 @@
 version: 2.1
 orbs:
   python: circleci/python@1.0.0
-  pipenv: frameio/pipenv@0.17.3
 jobs:
   build:
     docker:
@@ -15,6 +14,10 @@ jobs:
     steps:
       - checkout
       - python/install-packages
+      - run:
+          name: Run install pipenv
+          command: |
+            pip install pipenv
       - run:
           name: Run django tests
           command: |
