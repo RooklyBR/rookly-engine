@@ -1,3 +1,4 @@
+import uuid
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
@@ -20,9 +21,12 @@ class Business(models.Model):
     BUSINESS = 1
     TYPE_USER_CHOICES = [(FREELANCER, _("FreeLancer")), (BUSINESS, _("Business"))]
 
+    uuid = models.UUIDField(
+        _("UUID"), primary_key=True, default=uuid.uuid4, editable=False
+    )
     user = models.ForeignKey(User, models.CASCADE, related_name="business")
-    cpf_cnpj = models.TextField(_("description"))
-    presentation = models.TextField(_("presentation"))
+    cpf_cnpj = models.CharField(_("description"), max_length=14, unique=True)
+    presentation = models.TextField(_("presentation"), blank=True)
     type_user = models.PositiveIntegerField(
         _("type user"), choices=TYPE_USER_CHOICES, default=FREELANCER
     )

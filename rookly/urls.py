@@ -30,7 +30,7 @@ schema_view = get_schema_view(
         contact=openapi.Contact(email="contact@rookly.com.br"),
         license=openapi.License(name="GPL-3.0 License"),
     ),
-    public=False,
+    public=True,
     permission_classes=(permissions.AllowAny,),
 )
 
