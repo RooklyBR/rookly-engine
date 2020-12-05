@@ -41,7 +41,8 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     USERNAME_FIELD = "email"
 
-    name = models.CharField(_("name"), max_length=32, help_text=_("User's name."))
+    first_name = models.CharField(_('first name'), max_length=30, blank=True)
+    last_name = models.CharField(_('last name'), max_length=150, blank=True)
     email = models.EmailField(_("email"), unique=True, help_text=_("User's email."))
     cpf = models.CharField(_("cpf"), max_length=11, unique=True, help_text=_("User's cpf."))
     telephone = models.CharField(

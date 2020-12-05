@@ -1,5 +1,7 @@
 from rest_framework import routers
 
+from rookly.api.v1.account.views import LoginViewSet, RegisterUserViewSet
+
 
 class Router(routers.SimpleRouter):
     routes = [
@@ -75,3 +77,5 @@ class Router(routers.SimpleRouter):
 
 
 router = Router()
+router.register("account/login", LoginViewSet)
+router.register("account/register", RegisterUserViewSet)

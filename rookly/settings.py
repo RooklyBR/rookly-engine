@@ -137,3 +137,15 @@ REST_FRAMEWORK = {
     "PAGE_SIZE": 20,
     "DEFAULT_FILTER_BACKENDS": ["django_filters.rest_framework.DjangoFilterBackend"]
 }
+
+
+# Swagger
+
+SWAGGER_SETTINGS = {
+    "USE_SESSION_AUTH": False,
+    "DOC_EXPANSION": "list",
+    "APIS_SORTER": "alpha",
+    "SECURITY_DEFINITIONS": {
+        "Token": {"type": "apiKey", "name": "Authorization", "in": "header"}
+    },
+}
