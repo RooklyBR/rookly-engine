@@ -1,6 +1,7 @@
 version: 2.1
 orbs:
   python: circleci/python@1.0.0
+  pipenv: frameio/pipenv@0.17.3
 jobs:
   build:
     docker:
