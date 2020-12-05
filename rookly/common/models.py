@@ -41,12 +41,16 @@ class BusinessCategory(models.Model):
     business = models.ForeignKey(
         Business, models.CASCADE, related_name="business_category"
     )
+    created_at = models.DateTimeField(_("created at"), auto_now_add=True)
 
 
 class BusinessService(models.Model):
     class Meta:
         verbose_name = _("business service")
 
-    user = models.ForeignKey(User, models.CASCADE, related_name="business_service")
+    business = models.ForeignKey(
+        Business, models.CASCADE, related_name="business_service"
+    )
     price_hours = models.FloatField(_("estimated price per hour"))
     business_category = models.ForeignKey(BusinessCategory, models.CASCADE)
+    created_at = models.DateTimeField(_("created at"), auto_now_add=True)

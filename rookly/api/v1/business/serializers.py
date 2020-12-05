@@ -3,13 +3,13 @@ from rest_framework import serializers
 
 from rookly.api.v1.business.validators import CPFCNPJValidator
 from rookly.api.v1.fields import TextField
-from rookly.common.models import Business, BusinessCategory
+from rookly.common.models import Business, BusinessCategory, BusinessService
 
 
 class BusinessCategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = BusinessCategory
-        fields = ["id", "category", "business"]
+        fields = ["id", "category"]
         ref_name = None
 
 
@@ -23,7 +23,7 @@ class BusinessSerializer(serializers.ModelSerializer):
             "type_user",
             "created_at",
         ]
-        read_only = ["id", "type_user", "created_at"]
+        read_only = ["uuid", "created_at"]
         ref_name = None
 
     uuid = serializers.UUIDField(style={"show": False}, read_only=True)
@@ -43,3 +43,30 @@ class BusinessSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         validated_data.update({"user": self.context["request"].user})
         return super().create(validated_data)
+
+
+class BusinessServiceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BusinessService
+        fields = [
+            "business",
+            "price_hours",
+            "business_category",
+            "created_at",
+        ]
+        read_only = ["id", "created_at"]
+        ref_name = None
+
+    business = serializers.PrimaryKeyRelatedField(
+        queryset=Business.objects, style={"show": False}, required=True
+    )
+    business_category = BusinessCategorySerializer(many=False)
+
+    def create(self, validated_data):
+        business = validated_data.get("business")
+        business_category = business.business_category.create(
+            category=validated_data.get("business_category", {}).get("category"),
+        )
+        validated_data.update({"business_category": business_category})
+        business_service = super().create(validated_data)
+        return business_service
