@@ -3,7 +3,6 @@ from django.contrib.auth.password_validation import validate_password
 from django.contrib.auth.hashers import make_password
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 from rest_framework import serializers
-from rest_framework.exceptions import ValidationError
 
 from rookly.authentication.models import User
 from ..fields import PasswordField
@@ -26,7 +25,18 @@ class RegisterUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ["email", "first_name", "last_name", "cpf", "password", "telephone", "address_cep", "address_number", "address_complement", "birth_date"]
+        fields = [
+            "email",
+            "first_name",
+            "last_name",
+            "cpf",
+            "password",
+            "telephone",
+            "address_cep",
+            "address_number",
+            "address_complement",
+            "birth_date",
+        ]
         ref_name = None
 
     @staticmethod

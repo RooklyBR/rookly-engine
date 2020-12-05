@@ -50,5 +50,15 @@ class RegisterUserViewSet(mixins.CreateModelMixin, GenericViewSet):
 
     queryset = User.objects
     serializer_class = RegisterUserSerializer
-    lookup_field = ("email", "name", "cpf", "password", "telephone", "address_cep", "address_number", "address_complement", "birth_date")
+    lookup_field = (
+        "email",
+        "name",
+        "cpf",
+        "password",
+        "telephone",
+        "address_cep",
+        "address_number",
+        "address_complement",
+        "birth_date",
+    )
     metadata_class = Metadata

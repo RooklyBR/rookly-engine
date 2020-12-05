@@ -1,7 +1,6 @@
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
-from django.core.validators import _lazy_re_compile, RegexValidator
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
@@ -41,16 +40,16 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     USERNAME_FIELD = "email"
 
-    first_name = models.CharField(_('first name'), max_length=30, blank=True)
-    last_name = models.CharField(_('last name'), max_length=150, blank=True)
+    first_name = models.CharField(_("first name"), max_length=30, blank=True)
+    last_name = models.CharField(_("last name"), max_length=150, blank=True)
     email = models.EmailField(_("email"), unique=True, help_text=_("User's email."))
-    cpf = models.CharField(_("cpf"), max_length=11, unique=True, help_text=_("User's cpf."))
+    cpf = models.CharField(
+        _("cpf"), max_length=11, unique=True, help_text=_("User's cpf.")
+    )
     telephone = models.CharField(
         _("telephone"), max_length=16, help_text=_("User's Telephone."), null=True
     )
-    address_cep = models.IntegerField(
-        _("cep"), help_text=_("User's Cep.")
-    )
+    address_cep = models.IntegerField(_("cep"), help_text=_("User's Cep."))
     address_number = models.IntegerField(
         _("address number"), help_text=_("User's Address Number.")
     )

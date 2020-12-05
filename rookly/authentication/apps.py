@@ -2,4 +2,4 @@ from django.apps import AppConfig
 
 
 class AuthenticationConfig(AppConfig):
-    name = 'rookly.authentication'
+    name = "rookly.authentication"
