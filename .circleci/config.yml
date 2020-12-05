@@ -21,7 +21,7 @@ jobs:
       - run:
           name: Run install packages
           command: |
-            pipenv install --system --dev
+            pipenv install
       - run:
           name: check pep8
           command: |
@@ -29,12 +29,12 @@ jobs:
       - run:
           name: Run django migrations
           command: |
-            python manage.py migrate
+            pipenv run python manage.py migrate
       - run:
           name: Run django collectstatic
           command: |
-            python manage.py collectstatic --noinput
+            pipenv run python manage.py collectstatic --noinput
       - run:
           name: Run django tests
           command: |
-            python manage.py test
+            pipenv run python manage.py test
