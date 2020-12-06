@@ -11,22 +11,6 @@ from rookly.common.models import (
 )
 
 
-class CategorySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = BusinessCategory
-        fields = ["id", "subcategory"]
-        ref_name = None
-
-
-class SubCategorySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = SubCategory
-        fields = ["id", "name", "description", "category"]
-        ref_name = None
-
-    category = CategorySerializer(many=False)
-
-
 class BusinessCategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = BusinessCategory

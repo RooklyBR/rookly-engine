@@ -2,6 +2,7 @@ from rest_framework import routers
 
 from rookly.api.v1.account.views import LoginViewSet, RegisterUserViewSet
 from rookly.api.v1.business.views import BusinessViewSet, BusinessServiceViewSet
+from rookly.api.v1.category.views import CategoryViewSet
 
 
 class Router(routers.SimpleRouter):
@@ -82,3 +83,4 @@ router.register("account/login", LoginViewSet)
 router.register("account/register", RegisterUserViewSet)
 router.register("business/control", BusinessViewSet)
 router.register("business/service", BusinessServiceViewSet)
+router.register("category", CategoryViewSet)
