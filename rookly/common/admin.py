@@ -1,6 +1,17 @@
 from django.contrib import admin
 
-from rookly.common.models import Business, Category, BusinessCategory, BusinessService
+from rookly.common.models import (
+    Business,
+    SubCategory,
+    Category,
+    BusinessCategory,
+    BusinessService,
+)
+
+
+@admin.register(SubCategory)
+class SubCategoryAdmin(admin.ModelAdmin):
+    pass
 
 
 @admin.register(Category)

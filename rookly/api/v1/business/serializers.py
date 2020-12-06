@@ -3,14 +3,40 @@ from rest_framework import serializers
 
 from rookly.api.v1.business.validators import CPFCNPJValidator
 from rookly.api.v1.fields import TextField
-from rookly.common.models import Business, BusinessCategory, BusinessService
+from rookly.common.models import (
+    Business,
+    BusinessCategory,
+    BusinessService,
+    SubCategory,
+)
+
+
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BusinessCategory
+        fields = ["id", "subcategory"]
+        ref_name = None
+
+
+class SubCategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SubCategory
+        fields = ["id", "name", "description", "category"]
+        ref_name = None
+
+    category = CategorySerializer(many=False)
 
 
 class BusinessCategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = BusinessCategory
-        fields = ["id", "category"]
+        fields = ["id", "subcategory"]
         ref_name = None
+
+    # subcategory = SubCategorySerializer(many=False)
+    subcategory = serializers.PrimaryKeyRelatedField(
+        queryset=SubCategory.objects, style={"show": False}, required=True
+    )
 
 
 class BusinessSerializer(serializers.ModelSerializer):
@@ -65,7 +91,7 @@ class BusinessServiceSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         business = validated_data.get("business")
         business_category = business.business_category.create(
-            category=validated_data.get("business_category", {}).get("category"),
+            subcategory=validated_data.get("business_category", {}).get("subcategory"),
         )
         validated_data.update({"business_category": business_category})
         business_service = super().create(validated_data)

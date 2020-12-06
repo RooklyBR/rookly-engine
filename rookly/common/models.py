@@ -13,6 +13,15 @@ class Category(models.Model):
     description = models.TextField(_("description"), blank=True)
 
 
+class SubCategory(models.Model):
+    class Meta:
+        verbose_name = _("subcategory")
+
+    name = models.CharField(_("name"), max_length=255)
+    description = models.TextField(_("description"), blank=True)
+    category = models.ForeignKey(Category, models.CASCADE, related_name="subcategory")
+
+
 class Business(models.Model):
     class Meta:
         verbose_name = _("business")
@@ -36,8 +45,9 @@ class Business(models.Model):
 class BusinessCategory(models.Model):
     class Meta:
         verbose_name = _("business category")
+        unique_together = ["business", "subcategory"]
 
-    category = models.ForeignKey(Category, models.CASCADE)
+    subcategory = models.ForeignKey(SubCategory, models.CASCADE)
     business = models.ForeignKey(
         Business, models.CASCADE, related_name="business_category"
     )
