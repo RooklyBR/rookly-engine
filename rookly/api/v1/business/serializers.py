@@ -33,7 +33,6 @@ class BusinessCategorySerializer(serializers.ModelSerializer):
         fields = ["id", "subcategory"]
         ref_name = None
 
-    # subcategory = SubCategorySerializer(many=False)
     subcategory = serializers.PrimaryKeyRelatedField(
         queryset=SubCategory.objects, style={"show": False}, required=True
     )
