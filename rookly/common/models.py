@@ -10,7 +10,9 @@ class Category(models.Model):
         verbose_name = _("category")
 
     name = models.CharField(_("name"), max_length=255)
-    description = models.TextField(_("description"), blank=True)
+
+    def __str__(self):
+        return self.name
 
 
 class SubCategory(models.Model):
@@ -18,8 +20,10 @@ class SubCategory(models.Model):
         verbose_name = _("subcategory")
 
     name = models.CharField(_("name"), max_length=255)
-    description = models.TextField(_("description"), blank=True)
     category = models.ForeignKey(Category, models.CASCADE, related_name="subcategory")
+
+    def __str__(self):
+        return self.name
 
 
 class Business(models.Model):
