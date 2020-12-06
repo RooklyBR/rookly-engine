@@ -11,6 +11,9 @@ jobs:
         environment:
           POSTGRES_USER: root
           POSTGRES_DB: rookly
+    environment:
+      SECRET_KEY: SK
+      DEFAULT_DATABASE: postgres://root@localhost:5432/rookly
     steps:
       - checkout
       - python/install-packages

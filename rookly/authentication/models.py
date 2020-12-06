@@ -39,6 +39,13 @@ class User(AbstractBaseUser, PermissionsMixin):
         verbose_name_plural = _("users")
 
     USERNAME_FIELD = "email"
+    REQUIRED_FIELDS = [
+        "cpf",
+        "address_cep",
+        "address_number",
+        "address_complement",
+        "birth_date",
+    ]
 
     first_name = models.CharField(_("first name"), max_length=30, blank=True)
     last_name = models.CharField(_("last name"), max_length=150, blank=True)
