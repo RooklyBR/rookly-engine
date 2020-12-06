@@ -43,6 +43,4 @@ class BusinessServiceViewSet(
     serializer_class = BusinessServiceSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
     filter_class = BusinessServiceFilter
-    # filter_backends = [DjangoFilterBackend, SearchFilter]
-    # search_fields = ["$business_category__subcategory__name", "^business_category__subcategory__name", "=business_category__subcategory__name"]
     metadata_class = Metadata
