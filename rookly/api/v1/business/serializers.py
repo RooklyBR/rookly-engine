@@ -58,6 +58,7 @@ class BusinessServiceSerializer(serializers.ModelSerializer):
     class Meta:
         model = BusinessService
         fields = [
+            "id",
             "business",
             "price_hours",
             "business_category",

@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "rest_framework.authtoken",
     "drf_yasg2",
+    "django_filters",
     "rookly.authentication",
     "rookly.common",
 ]
