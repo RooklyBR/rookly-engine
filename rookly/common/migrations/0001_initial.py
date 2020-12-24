@@ -16,73 +16,183 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Business',
+            name="Business",
             fields=[
-                ('uuid', models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False, verbose_name='UUID')),
-                ('cpf_cnpj', models.CharField(max_length=14, unique=True, verbose_name='description')),
-                ('presentation', models.TextField(blank=True, verbose_name='presentation')),
-                ('type_user', models.PositiveIntegerField(choices=[(0, 'FreeLancer'), (1, 'Business')], default=0, verbose_name='type user')),
-                ('created_at', models.DateTimeField(auto_now_add=True, verbose_name='created at')),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='business', to=settings.AUTH_USER_MODEL)),
+                (
+                    "uuid",
+                    models.UUIDField(
+                        default=uuid.uuid4,
+                        editable=False,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="UUID",
+                    ),
+                ),
+                (
+                    "cpf_cnpj",
+                    models.CharField(
+                        max_length=14, unique=True, verbose_name="description"
+                    ),
+                ),
+                (
+                    "presentation",
+                    models.TextField(blank=True, verbose_name="presentation"),
+                ),
+                (
+                    "type_user",
+                    models.PositiveIntegerField(
+                        choices=[(0, "FreeLancer"), (1, "Business")],
+                        default=0,
+                        verbose_name="type user",
+                    ),
+                ),
+                (
+                    "created_at",
+                    models.DateTimeField(auto_now_add=True, verbose_name="created at"),
+                ),
+                (
+                    "user",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="business",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'business',
+                "verbose_name": "business",
             },
         ),
         migrations.CreateModel(
-            name='BusinessCategory',
+            name="BusinessCategory",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created_at', models.DateTimeField(auto_now_add=True, verbose_name='created at')),
-                ('business', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='business_category', to='common.Business')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "created_at",
+                    models.DateTimeField(auto_now_add=True, verbose_name="created at"),
+                ),
+                (
+                    "business",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="business_category",
+                        to="common.Business",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'business category',
+                "verbose_name": "business category",
             },
         ),
         migrations.CreateModel(
-            name='Category',
+            name="Category",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=255, verbose_name='name')),
-                ('description', models.TextField(blank=True, verbose_name='description')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=255, verbose_name="name")),
+                (
+                    "description",
+                    models.TextField(blank=True, verbose_name="description"),
+                ),
             ],
             options={
-                'verbose_name': 'category',
+                "verbose_name": "category",
             },
         ),
         migrations.CreateModel(
-            name='SubCategory',
+            name="SubCategory",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=255, verbose_name='name')),
-                ('description', models.TextField(blank=True, verbose_name='description')),
-                ('category', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='subcategory', to='common.Category')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=255, verbose_name="name")),
+                (
+                    "description",
+                    models.TextField(blank=True, verbose_name="description"),
+                ),
+                (
+                    "category",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="subcategory",
+                        to="common.Category",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'subcategory',
+                "verbose_name": "subcategory",
             },
         ),
         migrations.CreateModel(
-            name='BusinessService',
+            name="BusinessService",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('price_hours', models.FloatField(verbose_name='estimated price per hour')),
-                ('created_at', models.DateTimeField(auto_now_add=True, verbose_name='created at')),
-                ('business', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='business_service', to='common.Business')),
-                ('business_category', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='common.BusinessCategory')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "price_hours",
+                    models.FloatField(verbose_name="estimated price per hour"),
+                ),
+                (
+                    "created_at",
+                    models.DateTimeField(auto_now_add=True, verbose_name="created at"),
+                ),
+                (
+                    "business",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="business_service",
+                        to="common.Business",
+                    ),
+                ),
+                (
+                    "business_category",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="common.BusinessCategory",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'business service',
+                "verbose_name": "business service",
             },
         ),
         migrations.AddField(
-            model_name='businesscategory',
-            name='subcategory',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='common.SubCategory'),
+            model_name="businesscategory",
+            name="subcategory",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to="common.SubCategory"
+            ),
         ),
         migrations.AlterUniqueTogether(
-            name='businesscategory',
-            unique_together={('business', 'subcategory')},
+            name="businesscategory",
+            unique_together={("business", "subcategory")},
         ),
     ]

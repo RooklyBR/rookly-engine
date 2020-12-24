@@ -1,0 +1,40 @@
+# Attention:
+# Use this docker-compose to:
+# - Up development environment: docker-compose up
+# - Build docker images: docker-compose build
+
+version: '3.6'
+
+services:
+  database:
+      image: postgres
+      ports:
+        - 5432:5432
+      networks:
+        - default
+        - rookly
+      environment:
+        - POSTGRES_USER=${POSTGRES_USER:-rookly}
+        - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-rookly}
+        - POSTGRES_DB=${POSTGRES_DB:-rookly}
+  rookly:
+    image: ${DOCKER_IMAGE_NAME:-dyohan9/rookly-engine}:${TAG:-latest}
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - ${ENGINE_PORT:-80}:80
+    networks:
+      - default
+      - rookly
+    environment:
+      - SECRET_KEY=${SECRET_KEY:-SK}
+        - DEBUG=${DEBUG:-true}
+        - ALLOWED_HOSTS=${ALLOWED_HOSTS:-*}
+        - DEFAULT_DATABASE=${DEFAULT_DATABASE:-postgres://rookly:rookly@database:5432/rookly}
+        - LANGUAGE_CODE=${LANGUAGE_CODE:-en-us}
+        - TIME_ZONE=${TIME_ZONE:-UTC}
+
+networks:
+  rookly:
+    external: true
