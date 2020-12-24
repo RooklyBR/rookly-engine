@@ -29,11 +29,11 @@ services:
       - rookly
     environment:
       - SECRET_KEY=${SECRET_KEY:-SK}
-        - DEBUG=${DEBUG:-true}
-        - ALLOWED_HOSTS=${ALLOWED_HOSTS:-*}
-        - DEFAULT_DATABASE=${DEFAULT_DATABASE:-postgres://rookly:rookly@database:5432/rookly}
-        - LANGUAGE_CODE=${LANGUAGE_CODE:-en-us}
-        - TIME_ZONE=${TIME_ZONE:-UTC}
+      - DEBUG=${DEBUG:-true}
+      - ALLOWED_HOSTS=${ALLOWED_HOSTS:-*}
+      - DEFAULT_DATABASE=${DEFAULT_DATABASE:-postgres://rookly:rookly@database:5432/rookly}
+      - LANGUAGE_CODE=${LANGUAGE_CODE:-en-us}
+      - TIME_ZONE=${TIME_ZONE:-UTC}
 
 networks:
   rookly:
