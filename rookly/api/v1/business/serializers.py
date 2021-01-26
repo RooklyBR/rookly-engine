@@ -3,7 +3,6 @@ from rest_framework import serializers
 
 from rookly.api.v1.account.serializers import UserSerializer
 from rookly.api.v1.business.validators import CPFCNPJValidator
-from rookly.api.v1.city.serializers import CitySerializer
 from rookly.api.v1.fields import TextField
 from rookly.common.models import (
     Business,
