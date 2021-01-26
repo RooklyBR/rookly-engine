@@ -1,13 +1,15 @@
 from django.utils.translation import ugettext_lazy as _
 from rest_framework import serializers
 
+from rookly.api.v1.account.serializers import UserSerializer
 from rookly.api.v1.business.validators import CPFCNPJValidator
+from rookly.api.v1.city.serializers import CitySerializer
 from rookly.api.v1.fields import TextField
 from rookly.common.models import (
     Business,
     BusinessCategory,
     BusinessService,
-    SubCategory,
+    SubCategory, City,
 )
 
 
@@ -27,7 +29,9 @@ class BusinessSerializer(serializers.ModelSerializer):
         model = Business
         fields = [
             "uuid",
+            "name",
             "cpf_cnpj",
+            "city",
             "presentation",
             "type_user",
             "created_at",
@@ -41,6 +45,10 @@ class BusinessSerializer(serializers.ModelSerializer):
         min_length=11,
         max_length=Business._meta.get_field("cpf_cnpj").max_length,
         validators=[CPFCNPJValidator()],
+        write_only=True,
+    )
+    city = serializers.PrimaryKeyRelatedField(
+        queryset=City.objects, required=True
     )
 
     type_user = serializers.ChoiceField(
@@ -53,6 +61,10 @@ class BusinessSerializer(serializers.ModelSerializer):
         validated_data.update({"user": self.context["request"].user})
         return super().create(validated_data)
 
+    def update(self, instance, validated_data):
+        validated_data.pop('cpf_cnpj')
+        return super().update(instance, validated_data)
+
 
 class BusinessServiceSerializer(serializers.ModelSerializer):
     class Meta:
@@ -60,17 +72,23 @@ class BusinessServiceSerializer(serializers.ModelSerializer):
         fields = [
             "id",
             "business",
-            "price_hours",
+            "price",
+            "payment_type",
             "business_category",
+            "user",
             "created_at",
         ]
         read_only = ["id", "created_at"]
         ref_name = None
 
-    business = serializers.PrimaryKeyRelatedField(
-        queryset=Business.objects, style={"show": False}, required=True
-    )
+    business = BusinessSerializer(many=False)
     business_category = BusinessCategorySerializer(many=False)
+    payment_type = serializers.ChoiceField(
+        choices=BusinessService.TYPE_PAYMENT_CHOICES,
+        default=BusinessService.PAYMENT_HOUR,
+        label=_("Payment Type"),
+    )
+    user = UserSerializer(many=False, source="business.user", read_only=True)
 
     def create(self, validated_data):
         business = validated_data.get("business")
@@ -80,3 +98,8 @@ class BusinessServiceSerializer(serializers.ModelSerializer):
         validated_data.update({"business_category": business_category})
         business_service = super().create(validated_data)
         return business_service
+
+    def update(self, instance, validated_data):
+        validated_data.pop("user")
+        validated_data.pop("business")
+        return super().update(instance, validated_data)

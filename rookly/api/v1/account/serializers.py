@@ -42,3 +42,10 @@ class RegisterUserSerializer(serializers.ModelSerializer):
     @staticmethod
     def validate_password(value):
         return make_password(value)
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ["id", "first_name", "last_name", "email", "telephone"]
+        ref_name = None

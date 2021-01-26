@@ -1,14 +1,14 @@
 from django.utils import timezone
 from django.utils.decorators import method_decorator
 from drf_yasg2.utils import swagger_auto_schema
-from rest_framework import status, mixins
+from rest_framework import status, mixins, permissions
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
 
 from rookly.api.v1.metadata import Metadata
 from rookly.authentication.models import User
-from .serializers import LoginSerializer
+from .serializers import LoginSerializer, UserSerializer
 from .serializers import RegisterUserSerializer
 
 
@@ -62,3 +62,44 @@ class RegisterUserViewSet(mixins.CreateModelMixin, GenericViewSet):
         "birth_date",
     )
     metadata_class = Metadata
+
+
+class MyUserProfileViewSet(
+    mixins.RetrieveModelMixin,
+    mixins.UpdateModelMixin,
+    mixins.DestroyModelMixin,
+    GenericViewSet,
+):
+    """
+    Manager current user profile.
+    retrieve:
+    Get current user profile
+    update:
+    Update current user profile.
+    partial_update:
+    Update, partially, current user profile.
+    """
+
+    serializer_class = UserSerializer
+    queryset = User.objects
+    lookup_field = None
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_object(self, *args, **kwargs):
+        request = self.request
+        user = request.user
+
+        # May raise a permission denied
+        self.check_object_permissions(self.request, user)
+
+        return user
+
+
+class UserProfileViewSet(mixins.RetrieveModelMixin, GenericViewSet):
+    """
+    Get user profile
+    """
+
+    serializer_class = UserSerializer
+    queryset = User.objects
+    lookup_field = "pk"
