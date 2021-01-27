@@ -1,6 +1,11 @@
 from rest_framework import routers
 
-from rookly.api.v1.account.views import LoginViewSet, RegisterUserViewSet, UserProfileViewSet, MyUserProfileViewSet
+from rookly.api.v1.account.views import (
+    LoginViewSet,
+    RegisterUserViewSet,
+    UserProfileViewSet,
+    MyUserProfileViewSet,
+)
 from rookly.api.v1.business.views import BusinessViewSet, BusinessServiceViewSet
 from rookly.api.v1.category.views import CategoryViewSet
 from rookly.api.v1.city.views import CityViewSet

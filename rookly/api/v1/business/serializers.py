@@ -8,7 +8,8 @@ from rookly.common.models import (
     Business,
     BusinessCategory,
     BusinessService,
-    SubCategory, City,
+    SubCategory,
+    City,
 )
 
 
@@ -46,9 +47,7 @@ class BusinessSerializer(serializers.ModelSerializer):
         validators=[CPFCNPJValidator()],
         write_only=True,
     )
-    city = serializers.PrimaryKeyRelatedField(
-        queryset=City.objects, required=True
-    )
+    city = serializers.PrimaryKeyRelatedField(queryset=City.objects, required=True)
 
     type_user = serializers.ChoiceField(
         choices=Business.TYPE_USER_CHOICES,
@@ -61,7 +60,7 @@ class BusinessSerializer(serializers.ModelSerializer):
         return super().create(validated_data)
 
     def update(self, instance, validated_data):
-        validated_data.pop('cpf_cnpj')
+        validated_data.pop("cpf_cnpj")
         return super().update(instance, validated_data)
 
 

@@ -1,9 +1,6 @@
 from rest_framework import serializers
 
-from rookly.common.models import (
-    State,
-    City,
-)
+from rookly.authentication.models import State, City
 
 
 class StateSerializer(serializers.ModelSerializer):

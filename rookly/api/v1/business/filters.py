@@ -7,7 +7,15 @@ from rookly.common.models import BusinessService, Business
 class BusinessServiceFilter(filters.FilterSet):
     class Meta:
         model = BusinessService
-        fields = ["type_user", "payment_type", "subcategory", "category", "city", "state", "user"]
+        fields = [
+            "type_user",
+            "payment_type",
+            "subcategory",
+            "category",
+            "city",
+            "state",
+            "user",
+        ]
 
     type_user = filters.ChoiceFilter(
         field_name="business__type_user",
@@ -30,21 +38,17 @@ class BusinessServiceFilter(filters.FilterSet):
     )
 
     city = filters.CharFilter(
-        field_name="business__city__id",
-        method="filter_city",
-        help_text=_("city")
+        field_name="business__city__id", method="filter_city", help_text=_("city")
     )
 
     state = filters.CharFilter(
         field_name="business__city__state__id",
         method="filter_state",
-        help_text=_("state")
+        help_text=_("state"),
     )
 
     user = filters.CharFilter(
-        field_name="business__user",
-        method="filter_user",
-        help_text=_("user")
+        field_name="business__user", method="filter_user", help_text=_("user")
     )
 
     def filter_city(self, queryset, name, value):

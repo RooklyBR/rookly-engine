@@ -2,7 +2,7 @@ import uuid
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
-from rookly.authentication.models import User
+from rookly.authentication.models import User, City
 
 
 class Category(models.Model):
@@ -21,30 +21,6 @@ class SubCategory(models.Model):
 
     name = models.CharField(_("name"), max_length=255)
     category = models.ForeignKey(Category, models.CASCADE, related_name="subcategory")
-
-    def __str__(self):
-        return self.name
-
-
-class State(models.Model):
-    class Meta:
-        verbose_name = _("state")
-        unique_together = ['slug', 'name']
-
-    slug = models.CharField(_("state slug"), max_length=255, null=False)
-    name = models.CharField(_('state name'), max_length=255, null=False)
-
-    def __str__(self):
-        return self.name
-
-
-class City(models.Model):
-    class Meta:
-        verbose_name = _("city")
-        unique_together = ['state', 'name']
-
-    state = models.ForeignKey(State, models.CASCADE)
-    name = models.CharField(_('name city'), max_length=255, null=False)
 
     def __str__(self):
         return self.name

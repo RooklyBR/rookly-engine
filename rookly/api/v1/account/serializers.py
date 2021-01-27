@@ -5,6 +5,7 @@ from rest_framework.authtoken.serializers import AuthTokenSerializer
 from rest_framework import serializers
 
 from rookly.authentication.models import User
+from ..city.serializers import CitySerializer
 from ..fields import PasswordField
 
 
@@ -47,5 +48,19 @@ class RegisterUserSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ["id", "first_name", "last_name", "email", "telephone"]
+        fields = [
+            "id",
+            "first_name",
+            "last_name",
+            "email",
+            "telephone",
+            "business",
+            "city",
+        ]
         ref_name = None
+
+    business = serializers.SerializerMethodField()
+    city = CitySerializer(many=False)
+
+    def get_business(self, obj):
+        return obj.business.all().exists()
