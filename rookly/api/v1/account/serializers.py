@@ -1,11 +1,10 @@
-from django.utils.translation import ugettext_lazy as _
-from django.contrib.auth.password_validation import validate_password
 from django.contrib.auth.hashers import make_password
-from rest_framework.authtoken.serializers import AuthTokenSerializer
+from django.contrib.auth.password_validation import validate_password
+from django.utils.translation import ugettext_lazy as _
 from rest_framework import serializers
+from rest_framework.authtoken.serializers import AuthTokenSerializer
 
 from rookly.authentication.models import User
-from ..city.serializers import CitySerializer
 from ..fields import PasswordField
 
 
@@ -48,14 +47,7 @@ class RegisterUserSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = [
-            "id",
-            "first_name",
-            "last_name",
-            "email",
-            "telephone",
-            "business"
-        ]
+        fields = ["id", "first_name", "last_name", "email", "telephone", "business"]
         ref_name = None
 
     business = serializers.SerializerMethodField()
