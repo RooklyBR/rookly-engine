@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
 from django_filters import rest_framework as filters
 
@@ -15,6 +16,7 @@ class BusinessServiceFilter(filters.FilterSet):
             "city",
             "state",
             "user",
+            "price",
         ]
 
     type_user = filters.ChoiceFilter(
@@ -51,6 +53,8 @@ class BusinessServiceFilter(filters.FilterSet):
         field_name="business__user", method="filter_user", help_text=_("user")
     )
 
+    price = filters.RangeFilter(field_name="price", method="filter_price")
+
     def filter_city(self, queryset, name, value):
         return queryset.filter(business__city__pk=value)
 
@@ -59,3 +63,10 @@ class BusinessServiceFilter(filters.FilterSet):
 
     def filter_user(self, queryset, name, value):
         return queryset.filter(business__user__pk=value)
+
+    def filter_price(self, queryset, name, value):
+        query = queryset.filter(
+            Q(price__gte=int(value.start)),
+            Q(price__lte=int(value.stop)),
+        )
+        return query
