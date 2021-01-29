@@ -1,11 +1,10 @@
-from django.utils.translation import ugettext_lazy as _
-from django.contrib.auth.password_validation import validate_password
 from django.contrib.auth.hashers import make_password
-from rest_framework.authtoken.serializers import AuthTokenSerializer
+from django.contrib.auth.password_validation import validate_password
+from django.utils.translation import ugettext_lazy as _
 from rest_framework import serializers
+from rest_framework.authtoken.serializers import AuthTokenSerializer
 
 from rookly.authentication.models import User
-from ..city.serializers import CitySerializer
 from ..fields import PasswordField
 
 
@@ -54,11 +53,17 @@ class UserSerializer(serializers.ModelSerializer):
             "last_name",
             "email",
             "telephone",
-            "business"
+            "business",
+            "photo",
         ]
         ref_name = None
 
     business = serializers.SerializerMethodField()
+    photo = serializers.ImageField(label=_("User photo"), read_only=True)
 
     def get_business(self, obj):
         return obj.business.all().exists()
+
+
+class UserPhotoSerializer(serializers.Serializer):
+    file = serializers.FileField(required=True)
