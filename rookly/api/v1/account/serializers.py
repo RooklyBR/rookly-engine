@@ -54,13 +54,11 @@ class UserSerializer(serializers.ModelSerializer):
             "last_name",
             "email",
             "telephone",
-            "business",
-            "city",
+            "business"
         ]
         ref_name = None
 
     business = serializers.SerializerMethodField()
-    city = CitySerializer(many=False)
 
     def get_business(self, obj):
         return obj.business.all().exists()

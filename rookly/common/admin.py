@@ -6,6 +6,8 @@ from rookly.common.models import (
     Category,
     BusinessCategory,
     BusinessService,
+    State,
+    City,
 )
 
 
@@ -16,6 +18,16 @@ class SubCategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(State)
+class StateAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(City)
+class CityAdmin(admin.ModelAdmin):
     pass
 
 

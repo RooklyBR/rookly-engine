@@ -8,7 +8,7 @@ from rookly.api.v1.account.views import (
 )
 from rookly.api.v1.business.views import BusinessViewSet, BusinessServiceViewSet
 from rookly.api.v1.category.views import CategoryViewSet
-from rookly.api.v1.city.views import CityViewSet
+from rookly.api.v1.city.views import StateViewSet
 
 
 class Router(routers.SimpleRouter):
@@ -92,4 +92,4 @@ router.register("account/my-profile", MyUserProfileViewSet)
 router.register("business/control", BusinessViewSet)
 router.register("business/service", BusinessServiceViewSet)
 router.register("category", CategoryViewSet)
-router.register("city", CityViewSet)
+router.register("state", StateViewSet)
