@@ -47,9 +47,6 @@ class RegisterUserSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-<<<<<<< HEAD
-        fields = ["id", "first_name", "last_name", "email", "telephone", "business"]
-=======
         fields = [
             "id",
             "first_name",
@@ -59,7 +56,6 @@ class UserSerializer(serializers.ModelSerializer):
             "business",
             "photo",
         ]
->>>>>>> main
         ref_name = None
 
     business = serializers.SerializerMethodField()
