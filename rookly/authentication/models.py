@@ -4,6 +4,8 @@ from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
+from rookly.storages import AvatarUserMediaStorage
+
 
 class UserManager(BaseUserManager):
     def _create_user(self, email, cpf, password=None, **extra_fields):
@@ -69,6 +71,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(_("active"), default=True)
 
     joined_at = models.DateField(_("joined at"), auto_now_add=True)
+
+    photo = models.ImageField(
+        _("photo user"), storage=AvatarUserMediaStorage(), null=True
+    )
 
     objects = UserManager()
 

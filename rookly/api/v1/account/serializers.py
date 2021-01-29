@@ -47,10 +47,27 @@ class RegisterUserSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
+<<<<<<< HEAD
         fields = ["id", "first_name", "last_name", "email", "telephone", "business"]
+=======
+        fields = [
+            "id",
+            "first_name",
+            "last_name",
+            "email",
+            "telephone",
+            "business",
+            "photo",
+        ]
+>>>>>>> main
         ref_name = None
 
     business = serializers.SerializerMethodField()
+    photo = serializers.ImageField(label=_("User photo"), read_only=True)
 
     def get_business(self, obj):
         return obj.business.all().exists()
+
+
+class UserPhotoSerializer(serializers.Serializer):
+    file = serializers.FileField(required=True)
