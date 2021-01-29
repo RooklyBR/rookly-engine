@@ -1,14 +1,18 @@
+import filetype
 from django.utils import timezone
 from django.utils.decorators import method_decorator
+from django.utils.translation import ugettext_lazy as _
 from drf_yasg2.utils import swagger_auto_schema
-from rest_framework import status, mixins, permissions
+from rest_framework import status, mixins, permissions, parsers
 from rest_framework.authtoken.models import Token
+from rest_framework.decorators import action
+from rest_framework.exceptions import UnsupportedMediaType
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
 
 from rookly.api.v1.metadata import Metadata
 from rookly.authentication.models import User
-from .serializers import LoginSerializer, UserSerializer
+from .serializers import LoginSerializer, UserSerializer, UserPhotoSerializer
 from .serializers import RegisterUserSerializer
 
 
@@ -93,6 +97,35 @@ class MyUserProfileViewSet(
         self.check_object_permissions(self.request, user)
 
         return user
+
+    @action(
+        detail=True,
+        methods=["POST"],
+        url_name="profile-upload-photo",
+        parser_classes=[parsers.MultiPartParser],
+        serializer_class=UserPhotoSerializer,
+    )
+    def upload_photo(self, request, **kwargs):  # pragma: no cover
+        f = request.FILES.get("file")
+
+        serializer = UserPhotoSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        if filetype.is_image(f):
+            self.request.user.photo = f
+            self.request.user.save(update_fields=["photo"])
+
+            return Response({"photo": self.request.user.photo.url})
+        try:
+            raise UnsupportedMediaType(
+                filetype.get_type(f.content_type).extension,
+                detail=_("We accept images only in the formats: .png, .jpeg, .gif"),
+            )
+        except Exception:
+            raise UnsupportedMediaType(
+                None,
+                detail=_("We accept images only in the formats: .png, .jpeg, .gif"),
+            )
 
 
 class UserProfileViewSet(mixins.RetrieveModelMixin, GenericViewSet):
