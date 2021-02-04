@@ -14,6 +14,8 @@ class UserManager(BaseUserManager):
         if not cpf:
             raise ValueError("The given cpf must be set")
 
+        print(extra_fields)
+
         email = self.normalize_email(email)
         user = self.model(email=email, cpf=cpf, **extra_fields)
         user.set_password(password)

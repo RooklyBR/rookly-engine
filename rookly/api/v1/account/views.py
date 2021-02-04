@@ -1,4 +1,5 @@
 import filetype
+from django.db.models import Exists, OuterRef
 from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
@@ -12,6 +13,7 @@ from rest_framework.viewsets import GenericViewSet
 
 from rookly.api.v1.metadata import Metadata
 from rookly.authentication.models import User
+from rookly.common.models import Business
 from .serializers import LoginSerializer, UserSerializer, UserPhotoSerializer
 from .serializers import RegisterUserSerializer
 
@@ -134,5 +136,11 @@ class UserProfileViewSet(mixins.RetrieveModelMixin, GenericViewSet):
     """
 
     serializer_class = UserSerializer
-    queryset = User.objects
+    queryset = User.objects.filter()
     lookup_field = "pk"
+
+    def get_queryset(self):
+        queryset = User.objects.annotate(
+            have_business=Exists(Business.objects.filter(user=OuterRef("id")))
+        )
+        return queryset.filter(have_business=True)

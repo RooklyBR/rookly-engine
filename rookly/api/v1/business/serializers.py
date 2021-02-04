@@ -32,9 +32,11 @@ class BusinessSerializer(serializers.ModelSerializer):
             "name",
             "cpf_cnpj",
             "city",
+            "state",
             "presentation",
             "type_user",
             "created_at",
+            "business_category",
         ]
         read_only = ["uuid", "created_at"]
         ref_name = None
@@ -48,12 +50,14 @@ class BusinessSerializer(serializers.ModelSerializer):
         write_only=True,
     )
     city = serializers.PrimaryKeyRelatedField(queryset=City.objects, required=True)
+    state = serializers.IntegerField(source="city.state.id", read_only=True)
 
     type_user = serializers.ChoiceField(
         choices=Business.TYPE_USER_CHOICES,
         default=Business.FREELANCER,
         label=_("Type User"),
     )
+    business_category = BusinessCategorySerializer(many=True, read_only=True)
 
     def create(self, validated_data):
         validated_data.update({"user": self.context["request"].user})
@@ -69,6 +73,7 @@ class BusinessServiceSerializer(serializers.ModelSerializer):
         model = BusinessService
         fields = [
             "id",
+            "business_control",
             "business",
             "price",
             "payment_type",
@@ -79,7 +84,13 @@ class BusinessServiceSerializer(serializers.ModelSerializer):
         read_only = ["id", "created_at"]
         ref_name = None
 
-    business = BusinessSerializer(many=False)
+    business_control = BusinessSerializer(many=False, read_only=True, source="business")
+    business = serializers.PrimaryKeyRelatedField(
+        queryset=Business.objects,
+        help_text=_("Business UUID"),
+        required=True,
+        write_only=True,
+    )
     business_category = BusinessCategorySerializer(many=False)
     payment_type = serializers.ChoiceField(
         choices=BusinessService.TYPE_PAYMENT_CHOICES,
