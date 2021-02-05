@@ -25,7 +25,7 @@ from rookly.api.v1 import urls as rookly_api_v1_urls
 schema_view = get_schema_view(
     openapi.Info(
         title="API Documentation",
-        default_version="v1.0.5",
+        default_version="v1.0.6",
         description="Documentation",
         terms_of_service="https://rookly.com.br/terms",
         contact=openapi.Contact(email="contact@rookly.com.br"),

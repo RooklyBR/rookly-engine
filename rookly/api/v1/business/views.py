@@ -7,6 +7,10 @@ from rookly.api.v1.business.serializers import (
     BusinessSerializer,
     BusinessServiceSerializer,
 )
+from rookly.api.v1.business.validators import (
+    BusinessServicePermission,
+    BusinessPermission,
+)
 from rookly.api.v1.metadata import Metadata
 from rookly.common.models import Business, BusinessService
 
@@ -23,7 +27,7 @@ class BusinessViewSet(
 
     queryset = Business.objects
     serializer_class = BusinessSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, BusinessPermission]
     metadata_class = Metadata
 
 
@@ -41,6 +45,23 @@ class BusinessServiceViewSet(
 
     queryset = BusinessService.objects
     serializer_class = BusinessServiceSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAuthenticatedOrReadOnly, BusinessServicePermission]
     filter_class = BusinessServiceFilter
     metadata_class = Metadata
+
+
+class MyBusinessServiceViewSet(
+    mixins.ListModelMixin,
+    GenericViewSet,
+):
+    """
+    Manager business.
+    """
+
+    queryset = BusinessService.objects
+    serializer_class = BusinessServiceSerializer
+    permission_classes = [IsAuthenticated]
+    metadata_class = Metadata
+
+    def get_queryset(self):
+        return self.queryset.filter(business__user=self.request.user)

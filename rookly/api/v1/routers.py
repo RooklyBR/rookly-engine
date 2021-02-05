@@ -6,7 +6,11 @@ from rookly.api.v1.account.views import (
     UserProfileViewSet,
     MyUserProfileViewSet,
 )
-from rookly.api.v1.business.views import BusinessViewSet, BusinessServiceViewSet
+from rookly.api.v1.business.views import (
+    BusinessViewSet,
+    BusinessServiceViewSet,
+    MyBusinessServiceViewSet,
+)
 from rookly.api.v1.category.views import CategoryViewSet
 from rookly.api.v1.city.views import StateViewSet
 
@@ -91,5 +95,6 @@ router.register("account/user-profile", UserProfileViewSet)
 router.register("account/my-profile", MyUserProfileViewSet)
 router.register("business/control", BusinessViewSet)
 router.register("business/service", BusinessServiceViewSet)
+router.register("business/myservice", MyBusinessServiceViewSet)
 router.register("category", CategoryViewSet)
 router.register("state", StateViewSet)
