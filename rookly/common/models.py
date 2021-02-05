@@ -53,6 +53,7 @@ class City(models.Model):
 class Business(models.Model):
     class Meta:
         verbose_name = _("business")
+        unique_together = ["user"]
 
     FREELANCER = 0
     BUSINESS = 1
@@ -71,6 +72,9 @@ class Business(models.Model):
     )
     created_at = models.DateTimeField(_("created at"), auto_now_add=True)
 
+    def __str__(self):
+        return f"{self.uuid} - {self.name}"
+
 
 class BusinessCategory(models.Model):
     class Meta:
@@ -82,6 +86,9 @@ class BusinessCategory(models.Model):
         Business, models.CASCADE, related_name="business_category"
     )
     created_at = models.DateTimeField(_("created at"), auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.business.name} - {self.business.uuid} - {self.subcategory.name}"
 
 
 class BusinessService(models.Model):
@@ -118,3 +125,6 @@ class BusinessService(models.Model):
     )
     business_category = models.ForeignKey(BusinessCategory, models.CASCADE)
     created_at = models.DateTimeField(_("created at"), auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.business.name} - {self.business.uuid} - {self.business_category.subcategory.name}"
