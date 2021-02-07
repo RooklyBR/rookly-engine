@@ -2,7 +2,10 @@ from django.utils.translation import ugettext_lazy as _
 from rest_framework import serializers
 
 from rookly.api.v1.account.serializers import UserSerializer
-from rookly.api.v1.business.validators import CPFCNPJValidator
+from rookly.api.v1.business.validators import (
+    CPFCNPJValidator,
+    CanContributeBusinessValidator,
+)
 from rookly.api.v1.fields import TextField
 from rookly.common.models import (
     Business,
@@ -90,6 +93,7 @@ class BusinessServiceSerializer(serializers.ModelSerializer):
         help_text=_("Business UUID"),
         required=True,
         write_only=True,
+        validators=[CanContributeBusinessValidator()],
     )
     business_category = BusinessCategorySerializer(many=False)
     payment_type = serializers.ChoiceField(

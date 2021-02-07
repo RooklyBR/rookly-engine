@@ -3,13 +3,13 @@ from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnl
 from rest_framework.viewsets import GenericViewSet
 
 from rookly.api.v1.business.filters import BusinessServiceFilter
+from rookly.api.v1.business.permissions import (
+    BusinessPermission,
+    BusinessServicePermission,
+)
 from rookly.api.v1.business.serializers import (
     BusinessSerializer,
     BusinessServiceSerializer,
-)
-from rookly.api.v1.business.validators import (
-    BusinessServicePermission,
-    BusinessPermission,
 )
 from rookly.api.v1.metadata import Metadata
 from rookly.common.models import Business, BusinessService
