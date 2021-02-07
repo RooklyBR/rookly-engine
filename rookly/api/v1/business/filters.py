@@ -66,10 +66,14 @@ class BusinessServiceFilter(filters.FilterSet):
 
     def filter_price(self, queryset, name, value):
         value_min = float(0.0 if value.start is None else value.start)
-        value_max = float(100.0 if value.stop is None else value.stop)
 
-        query = queryset.filter(
-            Q(price__gte=value_min),
-            Q(price__lte=value_max),
-        )
+        if value.stop is None:
+            query = queryset.filter(
+                Q(price__gte=value_min),
+            )
+        else:
+            query = queryset.filter(
+                Q(price__gte=value_min),
+                Q(price__lte=float(value.stop)),
+            )
         return query
