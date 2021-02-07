@@ -1,0 +1,36 @@
+{% load staticfiles i18n %}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+
+<body style="margin: 0; padding: 0; background-color: #2bbfac;">
+    <div style="width: 100%; height: 100%; padding: 32px 0; background-color: #2bbfac; font-family: sans-serif;">
+        <div style="width: 100%; max-width: 600px; margin: auto; border-radius: 4px; overflow: hidden;">
+            <div style="background-color: #f9f9f9; font-size: 1.25rem; color: #222222;">
+                {% block content %}
+                <a style="display: block; padding: 16px;" rel="nofollow" target="_blank">
+                    <img src="logo" width="124" height="26" style="display: block; margin: auto;" />
+                </a>
+                {% endblock %}
+                <div>{% block before-content %}{% endblock %}</div>
+                <div style="padding: 16px 48px;">
+                    {% block main-content %}{% endblock %}
+                </div>
+                <div>{% block after-content %}{% endblock %}</div>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; background-color: #312B53; font-size: .75rem; color: white;">
+                <div style="padding: 32px;">
+                    {% if cancel_subscription_url %}
+                    <div>{% blocktrans %}You can cancel your e-mail subscription
+                        <a rel="nofollow" href="{{ cancel_subscription_url }}" style="color: #FFFFFF;">here</a>.{% endblocktrans %}</div>{% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

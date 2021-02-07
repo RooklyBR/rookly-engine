@@ -26,6 +26,17 @@ env = environ.Env(
     AWS_SECRET_ACCESS_KEY=(str, None),
     AWS_STORAGE_BUCKET_NAME=(str, None),
     AWS_S3_REGION_NAME=(str, None),
+    EMAIL_HOST=(lambda v: v or None, None),
+    DEFAULT_FROM_EMAIL=(str, "webmaster@localhost"),
+    SERVER_EMAIL=(str, "root@localhost"),
+    EMAIL_PORT=(int, 25),
+    EMAIL_HOST_USER=(str, ""),
+    EMAIL_HOST_PASSWORD=(str, ""),
+    EMAIL_USE_SSL=(bool, False),
+    EMAIL_USE_TLS=(bool, False),
+    SEND_EMAILS=(bool, True),
+    BASE_URL=(str, "https://api.rookly.com.br"),
+    ROOKLY_WEBAPP_BASE_URL=(str, "http://localhost:3000/"),
 )
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -43,6 +54,7 @@ DEBUG = env.bool("DEBUG")
 
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
 
+BASE_URL = env.str("BASE_URL")
 
 # Application definition
 
@@ -179,3 +191,27 @@ AWS_SECRET_ACCESS_KEY = env.str("AWS_SECRET_ACCESS_KEY")
 
 AWS_STORAGE_BUCKET_NAME = env.str("AWS_STORAGE_BUCKET_NAME")
 AWS_S3_REGION_NAME = env.str("AWS_S3_REGION_NAME")
+
+# mail
+
+envvar_EMAIL_HOST = env.str("EMAIL_HOST")
+
+EMAIL_SUBJECT_PREFIX = "[rookly] "
+DEFAULT_FROM_EMAIL = env.str("DEFAULT_FROM_EMAIL")
+SERVER_EMAIL = env.str("SERVER_EMAIL")
+
+if envvar_EMAIL_HOST:
+    EMAIL_HOST = envvar_EMAIL_HOST
+    EMAIL_PORT = env.int("EMAIL_PORT")
+    EMAIL_HOST_USER = env.str("EMAIL_HOST_USER")
+    EMAIL_HOST_PASSWORD = env.str("EMAIL_HOST_PASSWORD")
+    EMAIL_USE_SSL = env.bool("EMAIL_USE_SSL")
+    EMAIL_USE_TLS = env.bool("EMAIL_USE_TLS")
+else:
+    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+SEND_EMAILS = env.bool("SEND_EMAILS")
+
+# webapp
+
+ROOKLY_WEBAPP_BASE_URL = env.str("ROOKLY_WEBAPP_BASE_URL")

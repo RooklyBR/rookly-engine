@@ -1,0 +1,3 @@
+{% load i18n %}{% trans 'Welcome to Rookly' %}
+
+{% blocktrans %}Hello, {{ name }}!{% endblocktrans %}

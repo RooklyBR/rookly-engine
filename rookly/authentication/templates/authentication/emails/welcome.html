@@ -1,0 +1,13 @@
+{% extends 'authentication/emails/base.html' %}
+
+{% load staticfiles i18n %}
+
+{% block before-content %}
+<div style="text-align: center; padding-top: 20px;">
+    <img src="logo" alt="{% trans 'Welcome to Rookly' %}" style="margin: auto; width: 100%; max-width: 388px; display: block;" />
+</div>
+{% endblock %}
+
+{% block main-content %}
+    <p style="margin: 16px 0;"><strong>{% blocktrans %}Hello, {{ name }}!{% endblocktrans %}</strong></p>
+{% endblock %}

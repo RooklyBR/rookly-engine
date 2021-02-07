@@ -14,7 +14,14 @@ from rest_framework.viewsets import GenericViewSet
 from rookly.api.v1.metadata import Metadata
 from rookly.authentication.models import User
 from rookly.common.models import Business
-from .serializers import LoginSerializer, UserSerializer, UserPhotoSerializer
+from .serializers import (
+    LoginSerializer,
+    UserSerializer,
+    UserPhotoSerializer,
+    ChangePasswordSerializer,
+    RequestResetPasswordSerializer,
+    ResetPasswordSerializer,
+)
 from .serializers import RegisterUserSerializer
 
 
@@ -144,3 +151,77 @@ class UserProfileViewSet(mixins.RetrieveModelMixin, GenericViewSet):
             have_business=Exists(Business.objects.filter(user=OuterRef("id")))
         )
         return queryset.filter(have_business=True)
+
+
+class ChangePasswordViewSet(mixins.UpdateModelMixin, GenericViewSet):
+    """
+    Change current user password.
+    """
+
+    serializer_class = ChangePasswordSerializer
+    queryset = User.objects
+    lookup_field = None
+    permission_classes = [permissions.IsAuthenticated]
+    metadata_class = Metadata
+
+    def get_object(self, *args, **kwargs):
+        request = self.request
+        user = request.user
+
+        # May raise a permission denied
+        self.check_object_permissions(self.request, user)
+
+        return user
+
+    def update(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        serializer = self.get_serializer(data=request.data)
+
+        if serializer.is_valid():
+            self.object.set_password(serializer.data.get("password"))
+            self.object.save()
+            return Response(status=status.HTTP_200_OK)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class RequestResetPasswordViewSet(mixins.CreateModelMixin, GenericViewSet):
+    """
+    Request reset password
+    """
+
+    serializer_class = RequestResetPasswordSerializer
+    queryset = User.objects
+    lookup_field = ["email"]
+    permission_classes = [permissions.AllowAny]
+    metadata_class = Metadata
+
+    def get_object(self):
+        return self.queryset.get(email=self.request.data.get("email"))
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid():
+            self.object = self.get_object()
+            self.object.send_reset_password_email()
+            return Response(status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ResetPasswordViewSet(mixins.UpdateModelMixin, GenericViewSet):
+    """
+    Reset password
+    """
+
+    serializer_class = ResetPasswordSerializer
+    queryset = User.objects
+    lookup_field = "pk"
+
+    def update(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid():
+            self.object.set_password(serializer.data.get("password"))
+            self.object.save()
+            return Response(status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
