@@ -1,7 +1,11 @@
+from django.conf import settings
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
+from django.core.mail import send_mail
 from django.db import models
+from django.dispatch import receiver
+from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
 
 from rookly.storages import AvatarUserMediaStorage
@@ -86,3 +90,44 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def check_password_reset_token(self, token):
         return self.token_generator.check_token(self, token)
+
+    def make_password_reset_token(self):
+        return self.token_generator.make_token(self)
+
+    def send_welcome_email(self):
+        if not settings.SEND_EMAILS:
+            return False  # pragma: no cover
+        context = {"name": self.first_name, "base_url": settings.BASE_URL}
+        send_mail(
+            _("Welcome to Rookly"),
+            render_to_string("authentication/emails/welcome.txt", context),
+            None,
+            [self.email],
+            html_message=render_to_string(
+                "authentication/emails/welcome.html", context
+            ),
+        )
+
+    def send_reset_password_email(self):
+        if not settings.SEND_EMAILS:
+            return False  # pragma: no cover
+        token = self.make_password_reset_token()
+        reset_url = "{}reset-password/{}/{}/".format(
+            settings.ROOKLY_WEBAPP_BASE_URL, self.pk, token
+        )
+        context = {"reset_url": reset_url, "base_url": settings.BASE_URL}
+        send_mail(
+            _("Reset your Rookly password"),
+            render_to_string("authentication/emails/reset_password.txt", context),
+            None,
+            [self.email],
+            html_message=render_to_string(
+                "authentication/emails/reset_password.html", context
+            ),
+        )
+
+
+@receiver(models.signals.post_save, sender=User)
+def send_welcome_email(instance, created, **kwargs):
+    if created:
+        instance.send_welcome_email()

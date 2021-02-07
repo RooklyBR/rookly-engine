@@ -5,6 +5,9 @@ from rookly.api.v1.account.views import (
     RegisterUserViewSet,
     UserProfileViewSet,
     MyUserProfileViewSet,
+    ChangePasswordViewSet,
+    RequestResetPasswordViewSet,
+    ResetPasswordViewSet,
 )
 from rookly.api.v1.business.views import (
     BusinessViewSet,
@@ -93,6 +96,9 @@ router.register("account/login", LoginViewSet)
 router.register("account/register", RegisterUserViewSet)
 router.register("account/user-profile", UserProfileViewSet)
 router.register("account/my-profile", MyUserProfileViewSet)
+router.register("account/change-password", ChangePasswordViewSet)
+router.register("account/forgot-password", RequestResetPasswordViewSet)
+router.register("account/reset-password", ResetPasswordViewSet)
 router.register("business/control", BusinessViewSet)
 router.register("business/service", BusinessServiceViewSet)
 router.register("business/myservice", MyBusinessServiceViewSet)
