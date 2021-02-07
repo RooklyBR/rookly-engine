@@ -1,9 +1,7 @@
 import re
-from django.utils.translation import ugettext_lazy as _
-from rest_framework import permissions
-from rest_framework.exceptions import ValidationError
 
-from rookly.api.v1 import READ_METHODS, WRITE_METHODS
+from django.utils.translation import ugettext_lazy as _
+from rest_framework.exceptions import ValidationError, PermissionDenied
 
 
 class CPFCNPJValidator(object):
@@ -15,23 +13,11 @@ class CPFCNPJValidator(object):
             raise ValidationError(_("Enter a valid CPF or CNPJ."))
 
 
-class BusinessPermission(permissions.BasePermission):
-    def has_object_permission(self, request, view, obj):
-        if request.user.is_authenticated:
-            if request.method in READ_METHODS:
-                return True
-            if request.method in WRITE_METHODS:
-                return obj.user == request.user
-            return True
-        return False
+class CanContributeBusinessValidator(object):
+    def __call__(self, value):
+        if self.request.user.is_authenticated:
+            if not self.request.user == value.user:
+                raise PermissionDenied(_("You can't contribute in this business"))
 
-
-class BusinessServicePermission(permissions.BasePermission):
-    def has_object_permission(self, request, view, obj):
-        if request.user.is_authenticated:
-            if request.method in READ_METHODS:
-                return True
-            if request.method in WRITE_METHODS:
-                return obj.business.user == request.user
-            return True
-        return False
+    def set_context(self, serializer):
+        self.request = serializer.context.get("request")
