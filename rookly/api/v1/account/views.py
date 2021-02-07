@@ -136,7 +136,7 @@ class UserProfileViewSet(mixins.RetrieveModelMixin, GenericViewSet):
     """
 
     serializer_class = UserSerializer
-    queryset = User.objects.filter()
+    queryset = User.objects
     lookup_field = "pk"
 
     def get_queryset(self):

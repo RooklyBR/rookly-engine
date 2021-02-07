@@ -128,3 +128,9 @@ class BusinessService(models.Model):
 
     def __str__(self):
         return f"{self.business.name} - {self.business.uuid} - {self.business_category.subcategory.name}"
+
+    def delete(self, using=None, keep_parents=False):
+        business_category = self.business_category
+        instance = super().delete(using, keep_parents)
+        business_category.delete()
+        return instance
