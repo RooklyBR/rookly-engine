@@ -2,12 +2,27 @@
 
 {% load staticfiles i18n %}
 
-{% block before-content %}
-<div style="text-align: center; padding-top: 20px;">
-    <img src="logo" alt="{% trans 'Welcome to Rookly' %}" style="margin: auto; width: 100%; max-width: 388px; display: block;" />
-</div>
-{% endblock %}
-
 {% block main-content %}
-    <p style="margin: 16px 0;"><strong>{% blocktrans %}Hello, {{ name }}!{% endblocktrans %}</strong></p>
+    <section style="width: 574px; margin: 48px auto;">
+
+            <div style="font-family: 'Lato', sans-serif;  font-style: normal;text-align: center; font-weight: normal; font-size: 20px; line-height: 24px; color: #808080;"> {% trans 'Hi' %}, <span style="font-family: 'Lato', sans-serif; color: #00d1b2; font-size: 20px; font-weight: bold; font-style: normal;">{{ name }}!</span></div>
+            <div style="font-family: 'Lato', sans-serif; text-align: center;  font-weight: bold; font-size: 25px; line-height: 28px; color: #00d1b2; margin-top: 24px;">
+              {% trans 'Welcome to Rookly' %}
+            </div>
+
+            <div style="font-family: 'Lato', sans-serif;  width: 450px; text-align: center; margin: auto; font-style: normal; font-weight: normal; font-size: 16px; line-height: 24px; color: #808080; margin-top: 28px;">
+                {% trans 'We are very happy to have you with us! Our mission is to help you find / offer services in the best and fastest way possible !!' %} 😍
+            </div>
+
+            <div style="cursor:pointer; width: 200px; margin: auto; text-align: center;background: #00d1b2;color: #FFFFFF;font-size: 16px;
+            font-family: 'Lato', sans-serif; margin-top:20px;border-radius: 4px; padding: 1px 0; box-shadow: 0px 3px 6px #00000029;">
+                  <a href="https://www.rookly.com.br" style="text-decoration: none; color: #FFFFFF;">
+                    <p style="font-family: 'Lato', sans-serif; font-weight: bold;">
+                        {% trans 'Visit Rookly' %}
+                    </p>
+                  </a>
+            </div>
+
+
+          </section>
 {% endblock %}

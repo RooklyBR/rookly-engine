@@ -1,0 +1,350 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <daniel@rookly.com.br>, 2021.
+#
+# Translators:
+# Rookly BR <contato@rookly.com.br>, 2021
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-02-12 15:31+0000\n"
+"PO-Revision-Date: 2021-02-12 15:37+0000\n"
+"Last-Translator: Rookly BR <contato@rookly.com.br>, 2021\n"
+"Language-Team: Portuguese (Brazil) (https://www.transifex.com/rookly/teams/117098/pt_BR/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: pt_BR\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: rookly/api/v1/account/serializers.py:15
+#: rookly/api/v1/account/serializers.py:119
+msgid "Email"
+msgstr "Email"
+
+#: rookly/api/v1/account/serializers.py:16
+#: rookly/api/v1/account/serializers.py:26
+msgid "Password"
+msgstr "Senha"
+
+#: rookly/api/v1/account/serializers.py:74
+msgid "User photo"
+msgstr "Foto do Usuário"
+
+#: rookly/api/v1/account/serializers.py:101
+msgid "Current Password"
+msgstr "Senha Atual"
+
+#: rookly/api/v1/account/serializers.py:103
+#: rookly/api/v1/account/serializers.py:137
+msgid "New Password"
+msgstr "Nova Senha"
+
+#: rookly/api/v1/account/serializers.py:114
+msgid "Wrong password"
+msgstr "Senha incorreta"
+
+#: rookly/api/v1/account/serializers.py:131
+msgid "No user registered with this email"
+msgstr "Nenhum usuário registrado com este e-mail"
+
+#: rookly/api/v1/account/serializers.py:135
+msgid "Token"
+msgstr "Token"
+
+#: rookly/api/v1/account/serializers.py:148
+msgid "Invalid token for this user"
+msgstr "Token inválido para este usuário"
+
+#: rookly/api/v1/account/views.py:131 rookly/api/v1/account/views.py:136
+msgid "We accept images only in the formats: .png, .jpeg, .gif"
+msgstr "Aceitamos imagens apenas nos formatos: .png, .jpeg, .gif"
+
+#: rookly/api/v1/business/filters.py:24 rookly/common/models.py:71
+msgid "type user"
+msgstr "tipo de usuário"
+
+#: rookly/api/v1/business/filters.py:30
+msgid "type payment"
+msgstr "tipo de pagamento"
+
+#: rookly/api/v1/business/filters.py:35 rookly/common/models.py:20
+msgid "subcategory"
+msgstr "subcategoria"
+
+#: rookly/api/v1/business/filters.py:39 rookly/common/models.py:10
+msgid "category"
+msgstr "categoria"
+
+#: rookly/api/v1/business/filters.py:43 rookly/common/models.py:43
+msgid "city"
+msgstr "cidade"
+
+#: rookly/api/v1/business/filters.py:49 rookly/common/models.py:31
+msgid "state"
+msgstr "estado"
+
+#: rookly/api/v1/business/filters.py:53 rookly/authentication/models.py:46
+msgid "user"
+msgstr "usuário"
+
+#: rookly/api/v1/business/serializers.py:51
+#: rookly/api/v1/business/serializers.py:82
+msgid "CPF or CNPJ"
+msgstr "CPF ou CNPJ"
+
+#: rookly/api/v1/business/serializers.py:63
+msgid "Type User"
+msgstr "Tipo de Usuário"
+
+#: rookly/api/v1/business/serializers.py:71
+msgid "You already have a registered business"
+msgstr "Você já tem uma empresa registrada"
+
+#: rookly/api/v1/business/serializers.py:109
+msgid "Business UUID"
+msgstr "UUID do Negócio"
+
+#: rookly/api/v1/business/serializers.py:118
+msgid "Payment Type"
+msgstr "Tipo de Pagamento"
+
+#: rookly/api/v1/business/validators.py:13
+msgid "Enter a valid CPF or CNPJ."
+msgstr "Insira um CPF ou CNPJ válido."
+
+#: rookly/api/v1/business/validators.py:20
+msgid "You can't contribute in this business"
+msgstr "Você não pode contribuir neste negócio"
+
+#: rookly/api/v1/business/validators.py:32
+msgid "Specify the business UUID and category ID"
+msgstr "Especifique o UUID do negócio e o ID da categoria"
+
+#: rookly/api/v1/business/validators.py:38
+msgid "You already have a registered service with this category"
+msgstr "Você já tem um serviço registrado com esta categoria"
+
+#: rookly/authentication/models.py:47
+msgid "users"
+msgstr "usuários"
+
+#: rookly/authentication/models.py:58
+msgid "first name"
+msgstr "primeiro nome"
+
+#: rookly/authentication/models.py:59
+msgid "last name"
+msgstr "ultimo nome"
+
+#: rookly/authentication/models.py:60
+msgid "email"
+msgstr "email"
+
+#: rookly/authentication/models.py:60
+msgid "User's email."
+msgstr "Email do Usuário."
+
+#: rookly/authentication/models.py:62
+msgid "cpf"
+msgstr "cpf"
+
+#: rookly/authentication/models.py:62
+msgid "User's cpf."
+msgstr "cpf do Usuário."
+
+#: rookly/authentication/models.py:65
+msgid "telephone"
+msgstr "telefone"
+
+#: rookly/authentication/models.py:65
+msgid "User's Telephone."
+msgstr "telefone do usuário"
+
+#: rookly/authentication/models.py:67
+msgid "cep"
+msgstr "cep"
+
+#: rookly/authentication/models.py:67
+msgid "User's Cep."
+msgstr "Cep do Usuário."
+
+#: rookly/authentication/models.py:69
+msgid "address number"
+msgstr "numero do endereço"
+
+#: rookly/authentication/models.py:69
+msgid "User's Address Number."
+msgstr "Numero do Endereço do Usuário"
+
+#: rookly/authentication/models.py:72
+msgid "address complement"
+msgstr "Complemento do Endereço"
+
+#: rookly/authentication/models.py:72
+msgid "User's Address Complement."
+msgstr "Complemento do Endereço do Usuário"
+
+#: rookly/authentication/models.py:74
+msgid "birth date"
+msgstr "Data de Aniversário"
+
+#: rookly/authentication/models.py:76
+msgid "staff status"
+msgstr "staff status"
+
+#: rookly/authentication/models.py:77
+msgid "active"
+msgstr "Ativo"
+
+#: rookly/authentication/models.py:79
+msgid "joined at"
+msgstr "juntou-se a"
+
+#: rookly/authentication/models.py:82
+msgid "photo user"
+msgstr "foto do usuário"
+
+#: rookly/authentication/models.py:102
+#: rookly/authentication/templates/authentication/emails/welcome.html:10
+#: rookly/authentication/templates/authentication/emails/welcome.txt:1
+msgid "Welcome to Rookly"
+msgstr "Bem-vindo à Rookly"
+
+#: rookly/authentication/models.py:121
+msgid "Reset your Rookly password"
+msgstr "Redefina sua senha do Rookly"
+
+#: rookly/authentication/templates/authentication/emails/base.html:32
+msgid "All rights reserved"
+msgstr "Todos os direitos reservados"
+
+#: rookly/authentication/templates/authentication/emails/reset_password.html:8
+msgid "Password Reset Request"
+msgstr "Solicitação de redefinição de senha"
+
+#: rookly/authentication/templates/authentication/emails/reset_password.html:12
+msgid ""
+"We received a request to reset your password. If it was really you, please "
+"click the button below and follow the instructions to create a new password!"
+msgstr ""
+"Recebemos uma solicitação para redefinir sua senha. Se foi você mesmo, "
+"clique no botão abaixo e siga as instruções para criar uma nova senha!"
+
+#: rookly/authentication/templates/authentication/emails/reset_password.html:18
+msgid "Redefine password"
+msgstr "Redefinir senha"
+
+#: rookly/authentication/templates/authentication/emails/welcome.html:8
+msgid "Hi"
+msgstr "Olá"
+
+#: rookly/authentication/templates/authentication/emails/welcome.html:14
+msgid ""
+"We are very happy to have you with us! Our mission is to help you find / "
+"offer services in the best and fastest way possible !!"
+msgstr ""
+"Estamos muito felizes em tê-lo conosco! Nossa missão é ajudá-lo a "
+"encontrar/oferecer serviços da maneira melhor e mais rápida possível !!"
+
+#: rookly/authentication/templates/authentication/emails/welcome.html:21
+msgid "Visit Rookly"
+msgstr "Acesse a Rookly"
+
+#: rookly/authentication/templates/authentication/emails/welcome.txt:3
+#, python-format
+msgid "Hello, %(name)s!"
+msgstr "Oi, %(name)s!"
+
+#: rookly/common/models.py:12 rookly/common/models.py:22
+msgid "name"
+msgstr "nome"
+
+#: rookly/common/models.py:34
+msgid "state slug"
+msgstr "sigla do estado"
+
+#: rookly/common/models.py:35
+msgid "state name"
+msgstr "nome do estado"
+
+#: rookly/common/models.py:47
+msgid "name city"
+msgstr "nome da cidade"
+
+#: rookly/common/models.py:55
+msgid "business"
+msgstr "negocio"
+
+#: rookly/common/models.py:60
+msgid "FreeLancer"
+msgstr "FreeLancer"
+
+#: rookly/common/models.py:60
+msgid "Business"
+msgstr "Negocio"
+
+#: rookly/common/models.py:63
+msgid "UUID"
+msgstr "UUID"
+
+#: rookly/common/models.py:66
+msgid "name business"
+msgstr "nome do negocio"
+
+#: rookly/common/models.py:68
+msgid "cpf or cnpj"
+msgstr "cpf ou cnpj"
+
+#: rookly/common/models.py:69
+msgid "presentation"
+msgstr "apresentação"
+
+#: rookly/common/models.py:73 rookly/common/models.py:88
+#: rookly/common/models.py:127
+msgid "created at"
+msgstr "data de criação"
+
+#: rookly/common/models.py:81
+msgid "business category"
+msgstr "categoria do negócio"
+
+#: rookly/common/models.py:96
+msgid "business service"
+msgstr "serviço do negócio"
+
+#: rookly/common/models.py:104
+msgid "Hour-based payment"
+msgstr "Pagamento baseado em horas"
+
+#: rookly/common/models.py:108
+msgid "Session-based payment"
+msgstr "Pagamento baseado em sessão"
+
+#: rookly/common/models.py:112
+msgid "Daily-based payment"
+msgstr "Pagamento diário"
+
+#: rookly/common/models.py:119
+msgid "price"
+msgstr "preço"
+
+#: rookly/common/models.py:121
+msgid "payment type"
+msgstr "tipo de pagamento"
+
+#: rookly/settings.py:146
+msgid "An error has occurred"
+msgstr "ocorreu um erro"
+
+#: rookly/settings.py:150
+msgid "English"
+msgstr "Inglês"
+
+#: rookly/settings.py:150
+msgid "Brazilian Portuguese"
+msgstr "Portugues do Brasil"

@@ -10,6 +10,7 @@ from rookly.api.v1.business.permissions import (
 from rookly.api.v1.business.serializers import (
     BusinessSerializer,
     BusinessServiceSerializer,
+    BusinessUpdateSerializer,
 )
 from rookly.api.v1.metadata import Metadata
 from rookly.common.models import Business, BusinessService
@@ -29,6 +30,10 @@ class BusinessViewSet(
     serializer_class = BusinessSerializer
     permission_classes = [IsAuthenticated, BusinessPermission]
     metadata_class = Metadata
+
+    def update(self, request, *args, **kwargs):
+        self.serializer_class = BusinessUpdateSerializer
+        return super().update(request, *args, **kwargs)
 
 
 class BusinessServiceViewSet(
