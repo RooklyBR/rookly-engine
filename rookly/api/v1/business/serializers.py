@@ -1,10 +1,12 @@
 from django.utils.translation import ugettext_lazy as _
 from rest_framework import serializers
+from rest_framework.exceptions import APIException
 
 from rookly.api.v1.account.serializers import UserSerializer
 from rookly.api.v1.business.validators import (
     CPFCNPJValidator,
     CanContributeBusinessValidator,
+    ServiceExistsCategoryValidator,
 )
 from rookly.api.v1.fields import TextField
 from rookly.common.models import (
@@ -64,11 +66,25 @@ class BusinessSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         validated_data.update({"user": self.context["request"].user})
+
+        if Business.objects.filter(user=self.context["request"].user).exists():
+            raise APIException(detail=_("You already have a registered business"))
+
         return super().create(validated_data)
 
     def update(self, instance, validated_data):
-        validated_data.pop("cpf_cnpj")
+        validated_data.pop("cpf_cnpj", None)
         return super().update(instance, validated_data)
+
+
+class BusinessUpdateSerializer(BusinessSerializer):
+    cpf_cnpj = TextField(
+        label=_("CPF or CNPJ"),
+        min_length=11,
+        max_length=Business._meta.get_field("cpf_cnpj").max_length,
+        validators=[CPFCNPJValidator()],
+        read_only=True,
+    )
 
 
 class BusinessServiceSerializer(serializers.ModelSerializer):
@@ -103,6 +119,10 @@ class BusinessServiceSerializer(serializers.ModelSerializer):
     )
     user = UserSerializer(many=False, source="business.user", read_only=True)
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.validators.append(ServiceExistsCategoryValidator())
+
     def create(self, validated_data):
         business = validated_data.get("business")
         business_category = business.business_category.create(
@@ -113,6 +133,5 @@ class BusinessServiceSerializer(serializers.ModelSerializer):
         return business_service
 
     def update(self, instance, validated_data):
-        # validated_data.pop("user")
         validated_data.pop("business")
         return super().update(instance, validated_data)
