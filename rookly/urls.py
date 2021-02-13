@@ -14,6 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from django.contrib.sitemaps.views import sitemap
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.urls import path, include
 from drf_yasg2 import openapi
@@ -21,11 +22,12 @@ from drf_yasg2.views import get_schema_view
 from rest_framework import permissions
 
 from rookly.api.v1 import urls as rookly_api_v1_urls
+from rookly.sitemap import ServicesViewSitemap
 
 schema_view = get_schema_view(
     openapi.Info(
         title="API Documentation",
-        default_version="v1.0.13",
+        default_version="v1.0.14",
         description="Documentation",
         terms_of_service="https://rookly.com.br/terms",
         contact=openapi.Contact(email="contact@rookly.com.br"),
@@ -39,6 +41,16 @@ urlpatterns = [
     path("", schema_view.with_ui("redoc")),
     path("admin/", admin.site.urls),
     path("v1/", include(rookly_api_v1_urls)),
+    path(
+        "sitemap.xml",
+        sitemap,
+        {
+            "sitemaps": {
+                "services": ServicesViewSitemap,
+            }
+        },
+        name="django.contrib.sitemaps.views.sitemap",
+    ),
 ]
 
 urlpatterns += staticfiles_urlpatterns()
