@@ -19,6 +19,7 @@ boto3 = "~=1.16.44"
 django-storages = "~=1.11.1"
 filetype = "~=1.0.7"
 pillow = "~=8.0.1"
+sentry-sdk = "~=0.20.1"
 
 [requires]
 python_version = "3.6"

@@ -12,12 +12,16 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 import environ
+import sentry_sdk
+from django.utils.log import DEFAULT_LOGGING
 from django.utils.translation import ugettext_lazy as _
+from sentry_sdk.integrations.django import DjangoIntegration
 
 environ.Env.read_env(env_file=(environ.Path(__file__) - 2)(".env"))
 
 env = environ.Env(
     # set casting, default value
+    ENVIRONMENT=(str, "production"),
     DEBUG=(bool, False),
     ALLOWED_HOSTS=(lambda v: [s.strip() for s in v.split(",")], "*"),
     LANGUAGE_CODE=(str, "en-us"),
@@ -38,6 +42,8 @@ env = environ.Env(
     SEND_EMAILS=(bool, True),
     BASE_URL=(str, "https://api.rookly.com.br"),
     ROOKLY_WEBAPP_BASE_URL=(str, "http://localhost:3000/"),
+    ROOKLY_ENGINE_USE_SENTRY=(bool, False),
+    ROOKLY_ENGINE_SENTRY=(str, None),
 )
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -228,3 +234,42 @@ SEND_EMAILS = env.bool("SEND_EMAILS")
 # webapp
 
 ROOKLY_WEBAPP_BASE_URL = env.str("ROOKLY_WEBAPP_BASE_URL")
+
+# Logging
+
+LOGGING = DEFAULT_LOGGING
+LOGGING["formatters"]["verbose"] = {
+    "format": "%(levelname)s  %(asctime)s  %(module)s "
+    "%(process)d  %(thread)d  %(message)s"
+}
+LOGGING["handlers"]["console"] = {
+    "level": "DEBUG",
+    "class": "logging.StreamHandler",
+    "formatter": "verbose",
+}
+LOGGING["loggers"]["django.db.backends"] = {
+    "level": "ERROR",
+    "handlers": ["console"],
+    "propagate": False,
+}
+LOGGING["loggers"]["sentry.errors"] = {
+    "level": "DEBUG",
+    "handlers": ["console"],
+    "propagate": False,
+}
+
+# Sentry Environment
+
+ROOKLY_ENGINE_USE_SENTRY = env.bool("ROOKLY_ENGINE_USE_SENTRY")
+
+
+# Sentry
+
+if ROOKLY_ENGINE_USE_SENTRY:
+    sentry_sdk.init(
+        dsn=env.str("ROOKLY_ENGINE_SENTRY"),
+        integrations=[DjangoIntegration()],
+        environment=env.str("ENVIRONMENT"),
+        traces_sample_rate=1.0,
+        send_default_pii=True,
+    )
