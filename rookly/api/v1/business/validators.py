@@ -28,12 +28,10 @@ class ServiceExistsCategoryValidator(object):
         business = attrs.get("business")
         business_category = attrs.get("business_category")
 
-        if not business and not business_category:
-            raise ValidationError(_("Specify the business UUID and category ID"))
-
-        if business.business_category.filter(
-            subcategory=business_category.get("subcategory").pk
-        ).exists():
-            raise ValidationError(
-                _("You already have a registered service with this category")
-            )
+        if business and business_category:
+            if business.business_category.filter(
+                subcategory=business_category.get("subcategory").pk
+            ).exists():
+                raise ValidationError(
+                    _("You already have a registered service with this category")
+                )

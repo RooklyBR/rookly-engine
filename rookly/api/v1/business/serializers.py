@@ -134,4 +134,5 @@ class BusinessServiceSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         validated_data.pop("business", None)
+        validated_data.pop("business_category", None)
         return super().update(instance, validated_data)
