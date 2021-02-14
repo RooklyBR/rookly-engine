@@ -36,7 +36,8 @@ class BusinessServiceFilter(filters.FilterSet):
     )
 
     category = filters.CharFilter(
-        field_name="business_category__id", help_text=_("category")
+        field_name="business_category__subcategory__category__id",
+        help_text=_("category"),
     )
 
     city = filters.CharFilter(
