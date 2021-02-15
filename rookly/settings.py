@@ -44,6 +44,7 @@ env = environ.Env(
     ROOKLY_WEBAPP_BASE_URL=(str, "http://localhost:3000/"),
     ROOKLY_ENGINE_USE_SENTRY=(bool, False),
     ROOKLY_ENGINE_SENTRY=(str, None),
+    CHECK_ACCESSIBLE_API_URL=(str, None),
 )
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -252,6 +253,19 @@ LOGGING["loggers"]["django.db.backends"] = {
     "level": "ERROR",
     "handlers": ["console"],
     "propagate": False,
+}
+LOGGING["formatters"]["rookly.health"] = {
+    "format": "[rookly.health] {message}",
+    "style": "{",
+}
+LOGGING["handlers"]["rookly.health"] = {
+    "level": "DEBUG",
+    "class": "logging.StreamHandler",
+    "formatter": "rookly.health",
+}
+LOGGING["loggers"]["rookly.health.checks"] = {
+    "handlers": ["rookly.health"],
+    "level": "DEBUG",
 }
 LOGGING["loggers"]["sentry.errors"] = {
     "level": "DEBUG",

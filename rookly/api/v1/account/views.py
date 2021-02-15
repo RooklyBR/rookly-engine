@@ -66,7 +66,6 @@ class RegisterUserViewSet(mixins.CreateModelMixin, GenericViewSet):
     lookup_field = (
         "email",
         "name",
-        "cpf",
         "password",
         "telephone",
         "address_cep",

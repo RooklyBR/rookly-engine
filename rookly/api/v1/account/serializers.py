@@ -32,7 +32,6 @@ class RegisterUserSerializer(serializers.ModelSerializer):
             "email",
             "first_name",
             "last_name",
-            "cpf",
             "password",
             "telephone",
             "address_cep",
