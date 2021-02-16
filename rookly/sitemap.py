@@ -23,7 +23,7 @@ class ServicesViewSitemap(Sitemap):
         return BusinessService.objects.all()[:100].values_list("pk", flat=True)
 
     def location(self, item):
-        return f"/Prestador/{item}/"
+        return f"/Servico/{item}/"
 
     def lastmod(self, item):
         return timezone.now()
