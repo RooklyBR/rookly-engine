@@ -6,7 +6,7 @@ from rest_framework import status
 
 from rookly.api.v1.business.views import BusinessViewSet, BusinessServiceViewSet
 from rookly.api.v1.tests.utils import create_user_and_token
-from rookly.common.models import Business, City, BusinessService, BusinessCategory, SubCategory
+from rookly.common.models import Business, City, SubCategory
 
 
 class CreateBusinessAPITestCase(TestCase):
@@ -176,17 +176,12 @@ class ListBusinessServiceTestCase(TestCase):
             subcategory=SubCategory.objects.all().first()
         )
         self.service = self.business.business_service.create(
-            price=10.0,
-            business_category=self.business_category
+            price=10.0, business_category=self.business_category
         )
 
     def request(self):
-        request = self.factory.get(
-            "/v1/business/service/"
-        )
-        response = BusinessServiceViewSet.as_view({"get": "list"})(
-            request
-        )
+        request = self.factory.get("/v1/business/service/")
+        response = BusinessServiceViewSet.as_view({"get": "list"})(request)
         response.render()
         content_data = json.loads(response.content)
         return (response, content_data)
