@@ -27,6 +27,8 @@ class BusinessViewSet(
     """
 
     queryset = Business.objects
+    lookup_field = "uuid"
+    lookup_fields = ["uuid"]
     serializer_class = BusinessSerializer
     permission_classes = [IsAuthenticated, BusinessPermission]
     metadata_class = Metadata
