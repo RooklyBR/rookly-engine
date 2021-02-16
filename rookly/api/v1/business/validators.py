@@ -3,6 +3,8 @@ import re
 from django.utils.translation import ugettext_lazy as _
 from rest_framework.exceptions import ValidationError, PermissionDenied
 
+from rookly.common.models import Business
+
 
 class CPFCNPJValidator(object):
     def __call__(self, value):
@@ -11,6 +13,9 @@ class CPFCNPJValidator(object):
         )
         if not reg.match(value):
             raise ValidationError(_("Enter a valid CPF or CNPJ."))
+
+        if Business.objects.filter(cpf_cnpj=value).exists():
+            raise ValidationError(_("There is already a cpf or cnpj in a business."))
 
 
 class CanContributeBusinessValidator(object):
