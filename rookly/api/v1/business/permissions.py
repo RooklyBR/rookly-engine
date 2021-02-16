@@ -15,9 +15,10 @@ class BusinessPermission(permissions.BasePermission):
 
 class BusinessServicePermission(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
+        if request.method in READ_METHODS:
+            return True
+
         if request.user.is_authenticated:
-            if request.method in READ_METHODS:
-                return True
             if request.method in WRITE_METHODS or request.method in ADMIN_METHODS:
                 return obj.business.user == request.user
         return False
