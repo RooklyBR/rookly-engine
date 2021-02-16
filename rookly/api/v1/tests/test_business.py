@@ -4,9 +4,9 @@ from django.test import RequestFactory, TestCase
 from django.test.client import MULTIPART_CONTENT
 from rest_framework import status
 
-from rookly.api.v1.business.views import BusinessViewSet
+from rookly.api.v1.business.views import BusinessViewSet, BusinessServiceViewSet
 from rookly.api.v1.tests.utils import create_user_and_token
-from rookly.common.models import Business, City
+from rookly.common.models import Business, City, BusinessService, BusinessCategory, SubCategory
 
 
 class CreateBusinessAPITestCase(TestCase):
@@ -151,3 +151,48 @@ class DestroyBusinessTestCase(TestCase):
         response = self.request("")
 
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+
+class ListBusinessServiceTestCase(TestCase):
+    fixtures = [
+        "./rookly/common/fixtures/categories.json",
+        "./rookly/common/fixtures/states.json",
+    ]
+
+    def setUp(self):
+        self.factory = RequestFactory()
+
+        self.owner, self.owner_token = create_user_and_token("owner")
+        self.user, self.token = create_user_and_token()
+
+        self.business = Business.objects.create(
+            user=self.owner,
+            name="rookly",
+            city=City.objects.all().first(),
+            cpf_cnpj="00000000000",
+            presentation="",
+        )
+        self.business_category = self.business.business_category.create(
+            subcategory=SubCategory.objects.all().first()
+        )
+        self.service = self.business.business_service.create(
+            price=10.0,
+            business_category=self.business_category
+        )
+
+    def request(self):
+        request = self.factory.get(
+            "/v1/business/service/"
+        )
+        response = BusinessServiceViewSet.as_view({"get": "list"})(
+            request
+        )
+        response.render()
+        content_data = json.loads(response.content)
+        return (response, content_data)
+
+    def test_okay(self):
+        response, content_data = self.request()
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(content_data["count"], 1)
+        self.assertEqual(len(content_data["results"]), 1)
