@@ -50,7 +50,7 @@ class BusinessServiceViewSet(
     Manager business.
     """
 
-    queryset = BusinessService.objects.order_by("created_at")
+    queryset = BusinessService.objects.order_by("-created_at")
     serializer_class = BusinessServiceSerializer
     permission_classes = [IsAuthenticatedOrReadOnly, BusinessServicePermission]
     filter_class = BusinessServiceFilter

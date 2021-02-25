@@ -29,7 +29,7 @@ from rookly.sitemap import ServicesViewSitemap
 schema_view = get_schema_view(
     openapi.Info(
         title="API Documentation",
-        default_version="v1.0.21",
+        default_version="v1.0.22",
         description="Documentation",
         terms_of_service="https://rookly.com.br/Termos",
         contact=openapi.Contact(email="contact@rookly.com.br"),
